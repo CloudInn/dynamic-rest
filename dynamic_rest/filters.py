@@ -6,7 +6,7 @@ from django.db.models import Q, Prefetch, Manager
 import six
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework.fields import BooleanField, NullBooleanField
+from rest_framework.fields import BooleanField
 from rest_framework.filters import BaseFilterBackend, OrderingFilter
 
 from dynamic_rest.utils import is_truthy
@@ -306,7 +306,7 @@ class DynamicFilterBackend(BaseFilterBackend):
             out = {}
             for k, node in six.iteritems(filters):
                 filter_key, field = node.generate_query_key(serializer)
-                if isinstance(field, (BooleanField, NullBooleanField)):
+                if isinstance(field, (BooleanField,)):
                     node.value = is_truthy(node.value)
                 out[filter_key] = node.value
 
