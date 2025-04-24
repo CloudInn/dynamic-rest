@@ -223,6 +223,9 @@ class BaseNestedModelSerializer(serializers.ModelSerializer):
                     errors.append("Cannot reparent child")
                     continue
 
+                if related_field.name not in data and instance.id:
+                    data[related_field.name] = instance.id
+
                 serializer = self._get_serializer_for_field(
                     field,
                     instance=obj,
